@@ -30,7 +30,7 @@ type Image = {
   title: string;
   altText: string;
   description: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 };
 
 type BlogArticle = {
