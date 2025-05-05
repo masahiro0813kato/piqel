@@ -158,14 +158,17 @@ export default async function BlogPostPage({
             {/* タグ */}
             {Array.isArray(article.tags) && article.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
-                {article.tags.map((tag: any) => (
-                  <span
-                    key={typeof tag === "string" ? tag : tag._id}
-                    className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300"
-                  >
-                    {typeof tag === "string" ? tag : tag.name}
-                  </span>
-                ))}
+                {Array.isArray(article.tags) &&
+                  article.tags
+                    .slice(0, 2)
+                    .map((tag: { _id: string; name: string } | string) => (
+                      <span
+                        key={typeof tag === "string" ? tag : tag._id}
+                        className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
+                      >
+                        {typeof tag === "string" ? tag : tag.name}
+                      </span>
+                    ))}
               </div>
             )}
           </div>

@@ -1,5 +1,5 @@
 // src/app/blog/page.tsx
-import '@/app/globals.css';
+import "@/app/globals.css";
 import { newtClient } from "@/lib/newt";
 import Link from "next/link";
 import Image from "next/image";
@@ -125,15 +125,27 @@ export default async function BlogPage() {
 
                     {article.tags && article.tags.length > 0 && (
                       <div className="flex gap-2">
-                        {Array.isArray(article.tags) &&
-                          article.tags.slice(0, 2).map((tag: any) => (
-                            <span
-                              key={typeof tag === "string" ? tag : tag._id}
-                              className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
-                            >
-                              {typeof tag === "string" ? tag : tag.name}
-                            </span>
-                          ))}
+                        {article.tags && article.tags.length > 0 && (
+                          <div className="flex gap-2">
+                            {Array.isArray(article.tags) &&
+                              article.tags
+                                .slice(0, 2)
+                                .map(
+                                  (
+                                    tag: { _id: string; name: string } | string
+                                  ) => (
+                                    <span
+                                      key={
+                                        typeof tag === "string" ? tag : tag._id
+                                      }
+                                      className="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
+                                    >
+                                      {typeof tag === "string" ? tag : tag.name}
+                                    </span>
+                                  )
+                                )}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
