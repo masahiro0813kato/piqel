@@ -2,12 +2,32 @@
 import "server-only"; // サーバー側でのみ実行されるようにする
 import { createClient } from "newt-client-js";
 
-// Newtクライアントの作成
-export const newtClient = createClient({
-  spaceUid: process.env.NEWT_SPACE_UID || "",
-  token: process.env.NEWT_CDN_API_TOKEN || "",
-  apiType: "cdn",
-});
+// 環境変数がない場合のダミークライアント
+class DummyClient {
+  async getContents() {
+    return { items: [] };
+  }
+
+  async getFirstContent() {
+    return null;
+  }
+}
+
+// 環境変数の確認
+const spaceUid =
+  process.env.NEWT_SPACE_UID || process.env.NEXT_PUBLIC_NEWT_SPACE_UID;
+const token =
+  process.env.NEWT_CDN_API_TOKEN || process.env.NEXT_PUBLIC_NEWT_CDN_API_TOKEN;
+
+// クライアントの選択
+export const newtClient =
+  !spaceUid || !token
+    ? new DummyClient()
+    : createClient({
+        spaceUid,
+        token,
+        apiType: "cdn",
+      });
 
 // コンテンツのタイプを定義
 export type Work = {
